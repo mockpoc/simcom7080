@@ -1,0 +1,88 @@
+Connexion reseau
+AT
+AT+CPIN?
+AT+CSQ
+AT+CGATT?
+AT+COPS?
+AT+CGNAPN
+AT+CNACT=0,1
+AT+CNACT?
+
+Requete GET HTTP
+AT+SHCONF="URL","http://api.mockpoc.fr"
+AT+SHCONF="BODYLEN",1024
+AT+SHCONF="HEADERLEN",350
+AT+SHCONN
+AT+SHSTATE?
+AT+SHCHEAD
+AT+SHAHEAD="Host","api.mockpoc.fr"
+AT+SHAHEAD="auth-token","..."
+AT+SHREQ="/light/list",1
+AT+SHREAD=0,387
+AT+SHDISC
+
+
+exemple : 
+ATE<\r><\r><\n>OK<\r><\n>
+AT<\r><\r><\n>OK<\r><\n>
+AT<\r><\r><\n>OK<\r><\n>
+AT+CPIN?<\r><\r><\n>+CPIN: READY<\r><\n>
+<\r><\n>
+OK<\r><\n>
+AT+CSQ<\r><\r><\n>+CSQ: 17,99<\r><\n>
+<\r><\n>
+OK<\r><\n>
+AT+CGATT?<\r><\r><\n>+CGATT: 1<\r><\n>
+<\r><\n>
+OK<\r><\n>
+AT+COPS?<\r><\r><\n>+COPS: 0,0,"Orange F Hologram",7<\r><\n>
+<\r><\n>
+OK<\r><\n>
+AT+CGNAPN<\r><\r><\n>+CGNAPN: 1,"hologram"<\r><\n>
+<\r><\n>
+OK<\r><\n>
+AT+CNACT=0,1<\r><\r><\n>OK<\r><\n>
+<\r><\n>
++APP PDP: 0,ACTIVE<\r><\n>
+AT+CNACT?<\r><\r><\n>+CNACT: 0,1,"10.184.142.56"<\r><\n>
++CNACT: 1,0,"0.0.0.0"<\r><\n>
++CNACT: 2,0,"0.0.0.0"<\r><\n>
++CNACT: 3,0,"0.0.0.0"<\r><\n>
+<\r><\n>
+OK<\r><\n>
+AT+SHCONF="URL","http://api.mockpoc.fr"<\r><\r><\n>OK<\r><\n>
+AT+SHCONF="BODYLEN",1024<\r><\r><\n>OK<\r><\n>
+AT+SHCONF="HEADERLEN",350<\r><\r><\n>OK<\r><\n>
+AT+SHCONN<\r><\r><\n>OK<\r><\n>
+AT+SHSTATE?<\r><\r><\n>+SHSTATE: 1<\r><\n>
+<\r><\n>
+OK<\r><\n>
+AT+SHCHEAD<\r><\r><\n>OK<\r><\n>
+AT+SHAHEAD="Host","api.mockpoc.fr<\r><\r><\n>ERROR<\r><\n>
+AT+SHAHEAD="Host","api.mockpoc.fr"<\r><\r><\n>OK<\r><\n>
+AT+SHAHEAD="auth-token","..."<\r><\r><\n>OK<\r><\n>
+AT+SHREQ="/light/list",1<\r><\r><\n>OK<\r><\n>
+<\r><\n>
++SHREQ: "GET",400,13<\r><\n>
+AT+SHREAD=0,13<\r><\r><\n>OK<\r><\n>
+<\r><\n>
++SHREAD: 13<\r><\n>
+invalid token<\r><\n>
+AT+SHCHEAD<\r><\r><\n>OK<\r><\n>
+AT+SHAHEAD="Host","api.mockpoc.fr"<\r><\r><\n>OK<\r><\n>
+AT+SHAHEAD="auth-token","..."<\r><\r><\n>OK<\r><\n>
+AT+SHREQ="/light/list",1<\r><\r><\n>OK<\r><\n>
+<\r><\n>
++SHREQ: "GET",200,250<\r><\n>
+AT+SHREAD=0,250<\r><\r><\n>OK<\r><\n>
+<\r><\n>
++SHREAD: 250<\r><\n>
+[{"state":"0","_id":"5f0617a759ec1d386b68dc78","label":"stairs","ipBase":18,"__v":0},{"state":"0","_id":"5f06184a59ec1d386b68dc7a","label":"grill","ipBase":16,"__v":0},{"state":"0","_id":"5f06184a59ec1d386b68dc7b","label":"sofa","ipBase":17,"__v":0}]<\r><\n>
+AT+SHDISC<\r><\r><\n>OK<\r><\n>
+AT+CNMP?<\r><\r><\n>+CNMP: 38<\r><\n>
+AT+CMNB?<\r><\r><\n>+CMNB: 1<\r><\n>
+
+Temps entre AT+SHREQ et AT+SHREQ=200,250 -> 1.045s (requete HTTP)
+Temps entre AT+SHREAD et +SHREAD -> 1.008s (lecture données reçus = 250o)
+Mode = LTE-M
+Mode préféré : LTE-M
