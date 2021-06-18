@@ -10,7 +10,7 @@
  */
 #include <stdio.h>
 #include <string.h>
-
+#include "at_engine.h"
 #ifdef TEST
     FILE *pFile;
 #endif
@@ -57,4 +57,48 @@ void send_command(char *command, char** ppParams, int numParams)
 
 void get_response(char *pResponse, size_t buffLen)
 {
+}
+
+void UART_write(unsigned char data_out)
+{
+    printf("TX:%c\n", data_out);
+}
+
+void C4G_defaultHandler( char *buffer, uint8_t *type )
+{
+    #ifdef TEST
+    printf( "Response : \r\n" );
+    printf( buffer );
+    printf( "\r\n" );
+    if( !strncmp( "\r\nRING", buffer, 6 ) )
+        printf("received ring\n");
+        // callFlag = true;
+    #endif
+}
+
+void C4G_callerATHandler( char *rsp, uint8_t *flag )
+{
+    // char *tmpStart;
+    // char *tmpEnd;
+
+    // tmpStart = strchr( rsp, '\"' );
+    // tmpEnd = strchr( tmpStart + 1, '\"' );
+    // strncpy( callerId, tmpStart, tmpEnd - tmpStart + 1 );
+    printf("AT handler !\n");
+}
+
+uint8_t bufferReception[1024];
+static T_AT_storage storage[ 20 ];
+
+void config_modem(void)
+{
+    printf("config ...\n");
+    AT_initParser(UART_write, C4G_defaultHandler, 500, bufferReception, sizeof(bufferReception), storage, 20 );
+    AT_saveHandler( "+AT", 500, C4G_callerATHandler );
+    printf("init done\n");
+    AT_cmdSingle( "AT" );
+    AT_cmdSingle( "AT+CSCS=\"GSM\"" );
+    AT_cmdSingle( "AT+CMGF=1" );
+    AT_cmdSingle( "AT+CSCA?" );
+    AT_cmdSingle( "AT+UGPIOC?" );
 }

@@ -20,8 +20,8 @@
 int main(void)
 {
     UnityBegin("parser.c");
-    RUN_TEST(test_parser);
+    // RUN_TEST(test_send_command);
+    RUN_TEST(test_modem);
 
-    // TODO Ecrire le test
     return (UnityEnd());
 }

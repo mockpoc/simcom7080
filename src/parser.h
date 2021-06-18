@@ -18,4 +18,6 @@
  * @param numParams nombre de paramètres
  */
     void send_command(char *command, char **ppParams, int numParams);
+    void config_modem(void);
+    void timer_cb(void);
 #endif

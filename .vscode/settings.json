@@ -1,0 +1,13 @@
+{
+    "python.pythonPath": "C:\\Python39\\python.exe",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "files.associations": {
+        "cutest.h": "c",
+        "test.h": "c",
+        "winuser.h": "c",
+        "__at_parser.h": "c",
+        "stdlib.h": "c",
+        "parser.h": "c"
+    }
+}
